@@ -1,0 +1,133 @@
+﻿@implements IDisposable
+@if (appState.ShowHealth)
+{
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card border-danger shadow-lg">
+                    <div class="card-header"> <h4 class="float-start">Health Information</h4></div>
+                    <div class="card-header" style="max-height:580px; overflow-x:hidden overflow-y:scroll">
+                        <div class="card-body">
+                            @{
+                                var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Print" });
+                            }
+                            <SfGrid DataSource="@Healths" AllowPaging="true" AllowSorting="true" Toolbar="@Tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
+                                <GridPageSettings PageSize="5"></GridPageSettings>
+                                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="MedicalLeave"></GridEvents>
+                                <GridColumns>
+                                    <GridColumn Field="@nameof(Health.EmployeeId)" HeaderText="ID"></GridColumn>
+                                    <GridColumn Field="@nameof(Health.MedicalDiagnose)" HeaderText="Medical Diagnose"></GridColumn>
+                                    <GridColumn Field="@nameof(Health.MedicalRecomendation)" HeaderText="Medical Recomendation"></GridColumn>
+                                    <GridColumn Field="@nameof(Health.Date)" HeaderText="Date"></GridColumn>
+                                    <GridColumn HeaderText="Action">
+                                        <Template>
+                                            @{
+                                                var employee = (context as MedicalLeave);
+                                                <div>
+                                                    <i class="bi bi-pencil text-info" id="cursorStyle" @onclick="()=>EditClicked(employee!)"></i>
+                                                    <i class="bi bi-trash text-danger" id="cursorStyle" @onclick="()=>DeleteClicked(employee!)"></i>
+                                                </div>
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    #cursorStyle{
+        cursor: pointer;
+    }
+</style>
+
+<HealthDialog @ref="healthDialog"
+              Health="Health"
+              HandleSaveOperationEvent="HandleSaveOperationEvent"></HealthDialog>
+
+@code {
+    private SfGrid<MedicalLeave>? DefaultGrid;
+    HealthDialog? healthDialog;
+    MedicalLeave Health = new();
+    public List<MedicalLeave> Healths { get; set; } = new();
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetHealth();
+        appState.Action += StateHasChanged;
+        appState.RefreshHealthRequested += RefreshHealth;
+    }
+
+    private async void RefreshHealth()
+    {
+        await GetHealth();
+    }
+
+    private async Task GetHealth() => Healths = await healthService.GetAll(Constants.HealthBaseUrl);
+
+    void AddButtonClicked()
+    {
+        Health = new();
+        OpenDialog();
+    }
+
+    void OpenDialog() => healthDialog?.OpenDialog();
+
+    private async Task HandleSaveOperationEvent(MedicalLeave health)
+    {
+        var result = await healthService.Update(health, Constants.HealthBaseUrl);
+        bool successCheck = await DisplayMessage(result.Flag, result.Message);
+        if (successCheck)
+        {
+            Health = new();
+            await GetHealth();
+        }
+    }
+
+    private void EditClicked(MedicalLeave item)
+    {
+        Health = item;
+        OpenDialog();
+    }
+
+    private async Task DeleteClicked(MedicalLeave item)
+    {
+        bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete this?", "Confirm delete");
+        if (!confirm) return;
+
+        var response = await healthService.DeleteById(item.EmployeeId, Constants.HealthBaseUrl);
+        var result = await DisplayMessage(response.Flag, response.Message);
+        if (result)
+            await GetHealth();
+    }
+
+    private async Task<bool> DisplayMessage(bool flag, string message)
+    {
+        if (flag)
+        {
+            await dialogService.AlertAsync(message, "Success Operation");
+            return true;
+        }
+        else
+        {
+            await dialogService.AlertAsync(message, "Alert!");
+            return false;
+        }
+    }
+
+    public void Dispose() => appState.Action -= StateHasChanged;
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Text == "Excel Export")
+            await this.DefaultGrid!.ExportToExcelAsync()!;
+
+        if (args.Item.Text == "PDF Export")
+            await this.DefaultGrid!.ExportToPdfAsync()!;
+    }
+}

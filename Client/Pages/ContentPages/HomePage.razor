@@ -1,0 +1,31 @@
+﻿@page "/home/dashboard"
+@layout MainLayout
+
+<GeneralDepartmentPage />
+<DepartmentPage />
+<BranchPage />
+<CountryPage />
+<CityPage />
+<UserPage />
+<HealthPage />
+<OvertimePage />
+<VacationPage />
+<VacationTypePage />
+<OvertimeTypePage />
+<EmployeePage />
+
+@code {
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        await CheckUserAuthentication();
+    }
+
+    private async Task CheckUserAuthentication()
+    {
+        var user = (await AuthenticationState).User;
+        bool isUserAuthenticated = user.Identity!.IsAuthenticated;
+        if (!isUserAuthenticated)
+            navManager.NavigateTo("/identity/account/login");
+    }
+}
