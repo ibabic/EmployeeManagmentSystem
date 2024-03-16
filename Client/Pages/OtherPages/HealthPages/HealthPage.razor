@@ -24,8 +24,8 @@
                                             @{
                                                 var employee = (context as MedicalLeave);
                                                 <div>
-                                                    <i class="bi bi-pencil text-info" id="cursorStyle" @onclick="()=>EditClicked(employee!)"></i>
-                                                    <i class="bi bi-trash text-danger" id="cursorStyle" @onclick="()=>DeleteClicked(employee!)"></i>
+                                                    <i class="bi bi-pencil text-info cursorStyle"  @onclick="()=>EditClicked(employee!)"></i>
+                                                    <i class="bi bi-trash text-danger cursorStyle" @onclick="()=>DeleteClicked(employee!)"></i>
                                                 </div>
                                             }
                                         </Template>
@@ -40,11 +40,7 @@
     </div>
 }
 
-<style>
-    #cursorStyle{
-        cursor: pointer;
-    }
-</style>
+
 
 <HealthDialog @ref="healthDialog"
               Health="Health"

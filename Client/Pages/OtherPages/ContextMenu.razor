@@ -3,28 +3,28 @@
     <DialogTemplates>
         <Header> Managment Menu </Header>
         <Content>
-            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="ViewClicked">
+            <div class="hstack gap-2 mb-2 cursorStyle" @onclick="ViewClicked">
                 <i class="bi bi-eye text-info"></i>
                 <span id="cursorStyle" class="text-info"> View </span>
             </div>
-            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="EditClicked">
+            <div class="hstack gap-2 mb-2 cursorStyle" @onclick="EditClicked">
                 <i class="bi bi-pencil text-primary"></i>
                 <span id="cursorStyle" class="text-primary"> Edit </span>
             </div>
-            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="DeleteClicked">
+            <div class="hstack gap-2 mb-2 cursorStyle" @onclick="DeleteClicked">
                 <i class="bi bi-trash text-danger"></i>
                 <span id="cursorStyle" class="text-danger"> Delete </span>
             </div>
             <hr />
-            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddVacationClicked">
+            <div class="hstack gap-2 mb-2 cursorStyle" @onclick="AddVacationClicked">
                 <i class="bi bi-backpack3 text-success"></i>
                 <span id="cursorStyle" class="text-success"> Add Vacation </span>
             </div>
-            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddOvertimeClicked">
+            <div class="hstack gap-2 mb-2 cursorStyle" @onclick="AddOvertimeClicked">
                 <i class="bi bi-stopwatch text-danger"></i>
                 <span id="cursorStyle" class="text-danger"> Add Overtime </span>
             </div>
-            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddHealthClicked">
+            <div class="hstack gap-2 mb-2 cursorStyle" @onclick="AddHealthClicked">
                 <i class="bi bi-hospital text-warning"></i>
                 <span id="cursorStyle" class="text-warning"> Add Helth </span>
             </div>
@@ -32,11 +32,7 @@
     </DialogTemplates>
 </SfDialog>
 
-<style>
-    #cursorStyle{
-        cursor: pointer;
-    }
-</style>
+
 
 
 @code {

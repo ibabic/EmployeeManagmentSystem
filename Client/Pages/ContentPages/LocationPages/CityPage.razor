@@ -32,8 +32,8 @@
                                                 <td>@item.Name</td>
                                                 <td>@item.Country!.Name</td>
                                                 <td>
-                                                    <i class="bi bi-pencil text-info" id="cursorStyle" @onclick="()=>EditClicked(item)"></i>
-                                                    <i class="bi bi-trash text-danger" id="cursorStyle" @onclick="()=>DeleteClicked(item)"></i>
+                                                    <i class="bi bi-pencil text-info cursorStyle" @onclick="()=>EditClicked(item)"></i>
+                                                    <i class="bi bi-trash text-danger cursorStyle" @onclick="()=>DeleteClicked(item)"></i>
                                                 </td>
                                             </tr>
                                             count++;
@@ -59,11 +59,6 @@
             HandleSaveOperationEvent="HandleSaveOperationEvent"
             City="City"
             Countries="Countries" />
-<style>
-    .cursorStyle {
-        cursor: pointer;
-    }
-</style>
 
 
 @code {
