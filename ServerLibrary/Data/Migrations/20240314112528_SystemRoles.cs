@@ -28,8 +28,8 @@ namespace ServerLibrary.Data.Migrations
                 columns: new[] { "Name" },
                 values: new object[,]
                 {
-            { "admin" },
-            { "user" }
+            { "Admin" },
+            { "User" }
                 });
         }
 
