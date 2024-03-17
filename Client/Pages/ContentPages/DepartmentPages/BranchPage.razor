@@ -134,7 +134,7 @@
         if (!confirm) return;
 
         var response = await branchService.DeleteById(branch.Id, Constants.BranchBaseUrl);
-        if (await DisplayMessage(response.Flag, response.Message))
+        if (await Helpers.DisplayMessage(response.Flag, response.Message, dialogService))
             await GetBranches();
     }
 
