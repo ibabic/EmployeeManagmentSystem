@@ -119,20 +119,6 @@
             await GetUsers();
     }
 
-    // private async Task<bool> DisplayMessage(bool flag, string message )
-    // {
-    //     if (flag)
-    //     {
-    //         await dialogService.AlertAsync(message, "Success Operation");
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         await dialogService.AlertAsync(message, "Alert!");
-    //         return false;
-    //     }
-    // }
-
     public void Dispose()
     {
         appState.Action -= StateHasChanged;
