@@ -103,13 +103,13 @@
         {
             var result = await cityService
             .Update(city, Constants.CityBaseUrl);
-            successCheck = await DisplayMessage(result.Flag, result.Message);
+            successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
             var response = await cityService
             .Insert(city, Constants.CityBaseUrl);
-            successCheck = await DisplayMessage(response.Flag, response.Message);
+            successCheck = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         }
         if (successCheck)
         {
@@ -132,22 +132,8 @@
         if (!confirm) return;
 
         var response = await cityService.DeleteById(city.Id, Constants.CityBaseUrl);
-        if (await DisplayMessage(response.Flag, response.Message))
+        if (await Helpers.DisplayMessage(response.Flag, response.Message, dialogService))
             await GetCities();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void Dispose()

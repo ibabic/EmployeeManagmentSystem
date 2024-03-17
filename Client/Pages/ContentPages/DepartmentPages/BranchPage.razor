@@ -105,13 +105,13 @@
         {
             var result = await branchService
             .Update(branch, Constants.BranchBaseUrl);
-            successCheck = await DisplayMessage(result.Flag, result.Message);
+            successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
             var response = await branchService
             .Insert(branch, Constants.BranchBaseUrl);
-            successCheck = await DisplayMessage(response.Flag, response.Message);
+            successCheck = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         }
         if (successCheck)
         {
@@ -136,20 +136,6 @@
         var response = await branchService.DeleteById(branch.Id, Constants.BranchBaseUrl);
         if (await DisplayMessage(response.Flag, response.Message))
             await GetBranches();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void Dispose()

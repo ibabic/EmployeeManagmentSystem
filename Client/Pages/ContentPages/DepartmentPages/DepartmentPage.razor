@@ -98,13 +98,13 @@
         {
             var result = await departmentService
             .Update(Department, Constants.DepartmentBaseUrl);
-            successCheck = await DisplayMessage(result.Flag, result.Message);
+            successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
             var response = await departmentService
             .Insert(Department, Constants.DepartmentBaseUrl);
-            successCheck = await DisplayMessage(response.Flag, response.Message);
+            successCheck = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         }
         if (successCheck)
         {
@@ -134,22 +134,8 @@
         if (!confirm) return;
 
         var response = await departmentService.DeleteById(dep.Id, Constants.DepartmentBaseUrl);
-        if (await DisplayMessage(response.Flag, response.Message))
+        if (await Helpers.DisplayMessage(response.Flag, response.Message, dialogService))
             await GetDepartments();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void Dispose()

@@ -94,7 +94,7 @@
         
         var result = await accountService
         .UpdateUser(manageUser);
-        var successCheck = await DisplayMessage(result.Flag, result.Message);
+        var successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         
         if (successCheck)
         {
@@ -115,23 +115,23 @@
         if (!confirm) return;
 
         var response = await accountService.DeleteUser(manageUser.UserId);
-        if (await DisplayMessage(response.Flag, response.Message))
+        if (await Helpers.DisplayMessage(response.Flag, response.Message, dialogService))
             await GetUsers();
     }
 
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
-    }
+    // private async Task<bool> DisplayMessage(bool flag, string message )
+    // {
+    //     if (flag)
+    //     {
+    //         await dialogService.AlertAsync(message, "Success Operation");
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         await dialogService.AlertAsync(message, "Alert!");
+    //         return false;
+    //     }
+    // }
 
     public void Dispose()
     {

@@ -95,13 +95,13 @@
         {
             var result = await countryService
             .Update(country, Constants.CountryBaseUrl);
-            successCheck = await DisplayMessage(result.Flag, result.Message);
+            successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
             var response = await countryService
             .Insert(country, Constants.CountryBaseUrl);
-            successCheck = await DisplayMessage(response.Flag, response.Message);
+            successCheck = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         }
         if (successCheck)
         {
@@ -124,22 +124,8 @@
         if (!confirm) return;
 
         var response = await countryService.DeleteById(country.Id, Constants.CountryBaseUrl);
-        if (await DisplayMessage(response.Flag, response.Message))
+        if (await Helpers.DisplayMessage(response.Flag, response.Message, dialogService))
             await GetCountries();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void Dispose()

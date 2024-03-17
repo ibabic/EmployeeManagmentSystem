@@ -151,12 +151,12 @@
         if(employee.Id > 0)
         {
             var result = await employeeService.Update(employee, Constants.EmployeeBaseUrl);
-            successCheck = await DisplayMessage(result.Flag, result.Message);
+            successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
             var response = await employeeService.Insert(employee, Constants.EmployeeBaseUrl);
-            successCheck = await DisplayMessage(response.Flag, response.Message);
+            successCheck = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         }
         if (successCheck)
             addOrUpdateEmployee!.ClearContent();
@@ -168,20 +168,6 @@
     {
         SelectedEmployee = employee;
         contextMenu!.OpenContextMenu();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void EditClicked()
@@ -218,7 +204,7 @@
         if (!confirm) return;
 
         var response = await branchService.DeleteById(SelectedEmployee.Id, Constants.EmployeeBaseUrl);
-        var result = await DisplayMessage(response.Flag, response.Message);
+        var result = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         if(result)
         {
             SelectedEmployee = new();
@@ -252,7 +238,7 @@
     {
         item.EmployeeId = SelectedEmployee.Id;
         var (flag, message) = await healthService.Insert(item, Constants.HealthBaseUrl);
-        var response = await DisplayMessage(flag, message);
+        var response = await Helpers.DisplayMessage(flag, message, dialogService);
         if (response)
         {
             SelectedEmployee = new();
@@ -276,7 +262,7 @@
     {
         item.EmployeeId = SelectedEmployee.Id;
         var (flag, message) = await overtimeService.Insert(item, Constants.OvertimeBaseUrl);
-        var response = await DisplayMessage(flag, message);
+        var response = await Helpers.DisplayMessage(flag, message, dialogService);
         if (response)
         {
             SelectedEmployee = new();
@@ -301,7 +287,7 @@
     {
         item.EmployeeId = SelectedEmployee.Id;
         var (flag, message) = await vacationService.Insert(item, Constants.VacationBaseUrl);
-        var response = await DisplayMessage(flag, message);
+        var response = await Helpers.DisplayMessage(flag, message, dialogService);
         if (response)
         {
             SelectedEmployee = new();
