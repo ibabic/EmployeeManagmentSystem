@@ -112,6 +112,43 @@
         await LoadDefaults();
         await GetOvertimeTypes();
         await GetVacationTypes();
+        appState.RefreshVacationsTypeRequested += RefreshVacationType;
+        appState.RefreshOvertimesTypeRequested += RefreshOvertimeType;
+        appState.RefreshDefaultsRequested += RefreshDefaults;
+    }
+
+    private async void RefreshVacationType()
+    {
+        await GetVacationTypes();
+    }
+
+    private async void RefreshOvertimeType()
+    {
+        await GetOvertimeTypes();
+    }
+
+    private async void RefreshDefaults(Type entityType)
+    {
+        if (entityType == typeof(Country))
+        {
+            DefaultCountries = await countryService.GetAll(Constants.CountryBaseUrl);
+        }
+        else if (entityType == typeof(City))
+        {
+            DefaultCities = await cityService.GetAll(Constants.CityBaseUrl);
+        }
+        else if (entityType == typeof(GeneralDepartment))
+        {
+            DefaultGeneralDepartments = await generalDepartmentService.GetAll(Constants.GeneralDepartmentBaseUrl);
+        }
+        else if (entityType == typeof(Department))
+        {
+            DefaultDepartments = await departmentService.GetAll(Constants.DepartmentBaseUrl);
+        }
+        else if (entityType == typeof(Branch))
+        {
+            DefaultBranches = await branchService.GetAll(Constants.BranchBaseUrl);
+        }
     }
 
     protected async Task LoadDefaults()
@@ -123,6 +160,8 @@
         DefaultDepartments = await departmentService.GetAll(Constants.DepartmentBaseUrl);
         DefaultBranches = await branchService.GetAll(Constants.BranchBaseUrl);
     }
+
+
 
     private void HandleCountrySelectedEvent(int countryId) => 
     SelectedCities = DefaultCities.Where(c => c.CountryId == countryId).ToList();

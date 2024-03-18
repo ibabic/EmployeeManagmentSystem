@@ -116,6 +116,7 @@
             City = new();
             await GetCities();
             cityDialog?.ChangeTitle("Add");
+            appState.RequestRefreshDefaults<City>();
         }
     }
 

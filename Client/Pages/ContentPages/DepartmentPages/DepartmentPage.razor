@@ -111,6 +111,7 @@
             Department = new();
             await GetDepartments();
             departmentDialog?.ChangeTitle("Add");
+            appState.RequestRefreshDefaults<Department>();
         }
     }
 

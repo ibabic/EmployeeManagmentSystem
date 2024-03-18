@@ -94,6 +94,7 @@
             VacationType = new();
             await GetTypes();
             vacationTypeDialog?.ChangeTitle("Add");
+            appState.RequestVacationTypeRefresh();
         }
     }
 

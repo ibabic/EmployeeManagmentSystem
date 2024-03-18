@@ -92,6 +92,7 @@
             OvertimeType = new();
             await GetTypes();
             overtimeTypeDialog?.ChangeTitle("Add");
+            appState.RequestOvertimeTypeRefresh();
         }
     }
 

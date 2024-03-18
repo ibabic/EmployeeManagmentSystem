@@ -3,6 +3,12 @@
     public class AppState
     {
         public Action? Action { get; set; }
+        public event Action<Type> RefreshDefaultsRequested;
+
+        public void RequestRefreshDefaults<T>()
+        {
+            RefreshDefaultsRequested?.Invoke(typeof(T));
+        }
 
         public bool ShowGeneralDepartment { get; set; } = false;
         public void GeneralDepartmentClicked()
@@ -89,6 +95,12 @@
         }
 
         public bool ShowOvertimeType { get; set; }
+        public event Action RefreshOvertimesTypeRequested;
+
+        public void RequestOvertimeTypeRefresh()
+        {
+            RefreshOvertimesTypeRequested?.Invoke();
+        }
         public void OvertimeTypeClicked()
         {
             ResetAllDepartments();
@@ -111,6 +123,12 @@
         }
 
         public bool ShowVacationType { get; set; }
+        public event Action RefreshVacationsTypeRequested;
+
+        public void RequestVacationTypeRefresh()
+        {
+            RefreshVacationsTypeRequested?.Invoke();
+        }
         public void VacationTypeClicked()
         {
             ResetAllDepartments();

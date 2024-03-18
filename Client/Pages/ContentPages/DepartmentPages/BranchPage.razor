@@ -118,6 +118,7 @@
             Branch = new();
             await GetBranches();
             branchDialog?.ChangeTitle("Add");
+            appState.RequestRefreshDefaults<Branch>();
         }
     }
 

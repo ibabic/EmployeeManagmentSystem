@@ -108,6 +108,7 @@
             Country = new();
             await GetCountries();
             countryDialog?.ChangeTitle("Add");
+            appState.RequestRefreshDefaults<Country>();
         }
     }
 

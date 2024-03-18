@@ -101,6 +101,7 @@
             GeneralDepartment = new();
             await GetGeneralDepartments();
             generalDepartmentDialog?.ChangeTitle("Add");
+            appState.RequestRefreshDefaults<GeneralDepartment>();
         }
     }
 
