@@ -15,15 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddLogging(loggingBuilder =>
-{
-    loggingBuilder.ClearProviders();
-    loggingBuilder.AddSerilog();
-});
-
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
     .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -71,6 +69,7 @@ builder.Services.AddScoped<IGenericRepositoryInterface<Overtime>, OvertimeReposi
 builder.Services.AddScoped<IGenericRepositoryInterface<OvertimeType>, OvertimeTypeRepository>();
 
 builder.Services.AddScoped<IGenericRepositoryInterface<Vacation>, VacationRepository>();
+builder.Services.AddScoped<IVacationRepositoryInterface, VacationRepository>();
 builder.Services.AddScoped<IGenericRepositoryInterface<VacationType>, VacationTypeRepository>();
 
 builder.Services.AddScoped<IGenericRepositoryInterface<MedicalLeave>, HealthRepository>();
