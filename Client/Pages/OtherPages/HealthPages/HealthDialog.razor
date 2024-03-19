@@ -33,8 +33,8 @@
 
 @code {
     public string Title { get; set; } = "Add";
-    [Parameter] public MedicalLeave Health { get; set; } = new();
-    [Parameter] public EventCallback<MedicalLeave> HandleSaveOperationEvent { get; set; }
+    [Parameter] public MedicalLeaveDTO Health { get; set; } = new();
+    [Parameter] public EventCallback<MedicalLeaveDTO> HandleSaveOperationEvent { get; set; }
 
     private bool IsVisible { get; set; } = false;
     private async void Save() => await HandleSaveOperationEvent.InvokeAsync(Health);

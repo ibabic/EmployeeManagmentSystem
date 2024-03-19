@@ -13,26 +13,27 @@
                             }
                             <SfGrid DataSource="@Vacations" AllowPaging="true" AllowSorting="true" Toolbar="@Tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
                                 <GridPageSettings PageSize="5"></GridPageSettings>
-                                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Vacation"></GridEvents>
+                                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="VacationDTO"></GridEvents>
                                 <GridColumns>
-                                    <GridColumn Field="@nameof(Vacation.EmployeeId)" HeaderText="ID"></GridColumn>
+                                    <GridColumn Field="@nameof(VacationDTO.EmployeeId)" HeaderText="ID" Visible="false"></GridColumn>
+                                    <GridColumn Field="@nameof(VacationDTO.EmployeeFullName)" HeaderText="Full Name"></GridColumn>
                                     <GridColumn HeaderText="Type">
                                         <Template>
                                             @{
-                                                var item = (context as Vacation);
+                                                var item = (context as VacationDTO);
                                                 <div>
                                                     @item!.VacationType!.Name
                                                 </div>
                                             }
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field="@nameof(Vacation.StartDate)" HeaderText="Start Date"></GridColumn>
-                                    <GridColumn Field="@nameof(Vacation.EndDate)" HeaderText="End Date"></GridColumn>
-                                    <GridColumn Field="@nameof(Vacation.NumberOfDays)" HeaderText="Number of days"></GridColumn>
+                                    <GridColumn Field="@nameof(VacationDTO.StartDate)" HeaderText="Start Date"></GridColumn>
+                                    <GridColumn Field="@nameof(VacationDTO.EndDate)" HeaderText="End Date"></GridColumn>
+                                    <GridColumn Field="@nameof(VacationDTO.NumberOfDays)" HeaderText="Number of days"></GridColumn>
                                     <GridColumn HeaderText="Action">
                                         <Template>
                                             @{
-                                                var employee = (context as Vacation);
+                                                var employee = (context as VacationDTO);
                                                 <div>
                                                     <i class="bi bi-pencil text-info cursorStyle" @onclick="()=>EditClicked(employee!)"></i>
                                                     <i class="bi bi-trash text-danger cursorStyle" @onclick="()=>DeleteClicked(employee!)"></i>
@@ -57,16 +58,17 @@
 </VacationDialog>
 
 @code {
-    private SfGrid<Vacation>? DefaultGrid;
+    private SfGrid<VacationDTO>? DefaultGrid;
     VacationDialog? vacationDialog;
-    Vacation ItemModel = new();
-    public List<Vacation> Vacations { get; set; } = new();
+    VacationDTO ItemModel = new();
+    public List<VacationDTO> Vacations { get; set; } = new();
     public List<VacationType> VacationTypes { get; set; } = new();
 
     protected async override Task OnInitializedAsync()
     {
         await GetTypes();
         await GetVacations();
+        //await GetVacations2();
         appState.Action += StateHasChanged;
         appState.RefreshVacationsRequested += RefreshVacations;
     }
@@ -82,7 +84,7 @@
 
     void OpenDialog() => vacationDialog?.OpenDialog();
 
-    private async Task HandleSaveOperationEvent(Vacation item)
+    private async Task HandleSaveOperationEvent(VacationDTO item)
     {
         var result = await vacationService.Update(item, Constants.VacationBaseUrl);
         bool successCheck = await DisplayMessage(result.Flag, result.Message);
@@ -93,13 +95,13 @@
         }
     }
 
-    private void EditClicked(Vacation item)
+    private void EditClicked(VacationDTO item)
     {
         ItemModel = item;
         OpenDialog();
     }
 
-    private async Task DeleteClicked(Vacation item)
+    private async Task DeleteClicked(VacationDTO item)
     {
         bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete this?", "Confirm delete");
         if (!confirm) return;

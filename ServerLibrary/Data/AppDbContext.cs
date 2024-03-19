@@ -27,5 +27,15 @@ namespace ServerLibrary.Data
         public DbSet<Overtime> Overtimes { get; set; }
         public DbSet<OvertimeType> OvertimeTypes { get; set; }
         public DbSet<MedicalLeave> MedicalLeaves { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SystemRole>().HasData(
+                new SystemRole { Id = 1, Name = "Admin" },
+                new SystemRole { Id = 2, Name = "User" }
+            );
+        }
     }
 }

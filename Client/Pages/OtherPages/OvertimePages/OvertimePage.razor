@@ -13,26 +13,26 @@
                             }
                             <SfGrid DataSource="@Overtimes" AllowPaging="true" AllowSorting="true" Toolbar="@Tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
                                 <GridPageSettings PageSize="5"></GridPageSettings>
-                                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Overtime"></GridEvents>
+                                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="OvertimeDTO"></GridEvents>
                                 <GridColumns>
-                                    <GridColumn Field="@nameof(Overtime.EmployeeId)" HeaderText="ID"></GridColumn>
+                                    <GridColumn Field="@nameof(OvertimeDTO.EmployeeFullName)" HeaderText="Full Name"></GridColumn>
                                     <GridColumn HeaderText="Type">
                                         <Template>
                                             @{
-                                                var item = (context as Overtime);
+                                                var item = (context as OvertimeDTO);
                                                 <div>
                                                     @item!.OvertimeType!.Name
                                                 </div>
                                             }
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field="@nameof(Overtime.StartDate)" HeaderText="Start Date"></GridColumn>
-                                    <GridColumn Field="@nameof(Overtime.EndDate)" HeaderText="End Date"></GridColumn>
-                                    <GridColumn Field="@nameof(Overtime.numberOfDays)" HeaderText="Number of days"></GridColumn>
+                                    <GridColumn Field="@nameof(OvertimeDTO.StartDate)" HeaderText="Start Date"></GridColumn>
+                                    <GridColumn Field="@nameof(OvertimeDTO.EndDate)" HeaderText="End Date"></GridColumn>
+                                    <GridColumn Field="@nameof(OvertimeDTO.numberOfDays)" HeaderText="Number of days"></GridColumn>
                                     <GridColumn HeaderText="Action">
                                     <Template>
                                         @{
-                                            var employee = (context as Overtime);
+                                                var employee = (context as OvertimeDTO);
                                             <div>
                                                     <i class="bi bi-pencil text-info cursorStyle" @onclick="()=>EditClicked(employee!)"></i>
                                                     <i class="bi bi-trash text-danger cursorStyle" @onclick="()=>DeleteClicked(employee!)"></i>
@@ -57,10 +57,10 @@
 </OvertimeDialog>
 
 @code {
-    private SfGrid<Overtime>? DefaultGrid;
+    private SfGrid<OvertimeDTO>? DefaultGrid;
     OvertimeDialog? overtimeDialog;
-    Overtime ItemModel = new();
-    public List<Overtime> Overtimes { get; set; } = new();
+    OvertimeDTO ItemModel = new();
+    public List<OvertimeDTO> Overtimes { get; set; } = new();
     public List<OvertimeType> OvertimeTypes { get; set; } = new();
 
     protected async override Task OnInitializedAsync()
@@ -82,7 +82,7 @@
 
     void OpenDialog() => overtimeDialog?.OpenDialog();
 
-    private async Task HandleSaveOperationEvent(Overtime item)
+    private async Task HandleSaveOperationEvent(OvertimeDTO item)
     {
     var result = await overtimeService.Update(item, Constants.OvertimeBaseUrl);
         bool successCheck = await DisplayMessage(result.Flag, result.Message);
@@ -93,13 +93,13 @@
         }
     }
 
-    private void EditClicked(Overtime item)
+    private void EditClicked(OvertimeDTO item)
     {
         ItemModel = item;
         OpenDialog();
     }
 
-    private async Task DeleteClicked(Overtime item)
+    private async Task DeleteClicked(OvertimeDTO item)
     {
         bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete this?", "Confirm delete");
         if (!confirm) return;

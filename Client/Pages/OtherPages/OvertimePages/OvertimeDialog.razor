@@ -50,9 +50,9 @@
 </SfDialog>
 
 @code {
-    [Parameter] public Overtime ItemModel { get; set; } = new();
+    [Parameter] public OvertimeDTO ItemModel { get; set; } = new();
     [Parameter] public List<OvertimeType> OvertimeTypes { get; set; } = new();
-    [Parameter] public EventCallback<Overtime> HandleSaveOperationEvent { get; set; }
+    [Parameter] public EventCallback<OvertimeDTO> HandleSaveOperationEvent { get; set; }
     public string Title { get; set; } = "Add";
     private bool IsVisible { get; set; } = false;
 

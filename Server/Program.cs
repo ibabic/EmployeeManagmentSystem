@@ -1,3 +1,4 @@
+using BaseLibrary.DTOs;
 using BaseLibrary.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -5,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using ServerLibrary.Data;
 using ServerLibrary.Helpers;
-using ServerLibrary.Repositories.Contracts;
 using ServerLibrary.Repositories.Implementations;
 using ServerLibrary.Repositories.Interfaces;
 using System.Text;
@@ -65,14 +65,13 @@ builder.Services.AddScoped<IGenericRepositoryInterface<Branch>, BranchRepository
 builder.Services.AddScoped<IGenericRepositoryInterface<Country>, CountryRepository>();
 builder.Services.AddScoped<IGenericRepositoryInterface<City>, CityRepository>();
 
-builder.Services.AddScoped<IGenericRepositoryInterface<Overtime>, OvertimeRepository>();
+builder.Services.AddScoped<IGenericRepositoryInterface<OvertimeDTO>, OvertimeRepository>();
 builder.Services.AddScoped<IGenericRepositoryInterface<OvertimeType>, OvertimeTypeRepository>();
 
-builder.Services.AddScoped<IGenericRepositoryInterface<Vacation>, VacationRepository>();
-builder.Services.AddScoped<IVacationRepositoryInterface, VacationRepository>();
+builder.Services.AddScoped<IGenericRepositoryInterface<VacationDTO>, VacationRepository>();
 builder.Services.AddScoped<IGenericRepositoryInterface<VacationType>, VacationTypeRepository>();
 
-builder.Services.AddScoped<IGenericRepositoryInterface<MedicalLeave>, HealthRepository>();
+builder.Services.AddScoped<IGenericRepositoryInterface<MedicalLeaveDTO>, HealthRepository>();
 
 builder.Services.AddScoped<IGenericRepositoryInterface<Employee>, EmployeeRepository>();
 

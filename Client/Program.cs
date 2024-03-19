@@ -11,6 +11,7 @@ using Syncfusion.Blazor;
 using Client.ApplicationStates;
 using BaseLibrary.Entities;
 using Syncfusion.Licensing;
+using BaseLibrary.DTOs;
 
 
 
@@ -43,12 +44,12 @@ builder.Services.AddScoped<IGenericServiceInterface<City>, GenericServiceImpleme
 
 builder.Services.AddScoped<IGenericServiceInterface<Employee>, GenericServiceImplementation<Employee>>();
 
-builder.Services.AddScoped<IGenericServiceInterface<MedicalLeave>, GenericServiceImplementation<MedicalLeave>>();
+builder.Services.AddScoped<IGenericServiceInterface<MedicalLeaveDTO>, GenericServiceImplementation<MedicalLeaveDTO>>();
 
-builder.Services.AddScoped<IGenericServiceInterface<Overtime>, GenericServiceImplementation<Overtime>>();
+builder.Services.AddScoped<IGenericServiceInterface<OvertimeDTO>, GenericServiceImplementation<OvertimeDTO>>();
 builder.Services.AddScoped<IGenericServiceInterface<OvertimeType>, GenericServiceImplementation<OvertimeType>>();
 
-builder.Services.AddScoped<IGenericServiceInterface<Vacation>, GenericServiceImplementation<Vacation>>();
+builder.Services.AddScoped<IGenericServiceInterface<VacationDTO>, GenericServiceImplementation<VacationDTO>>();
 builder.Services.AddScoped<IGenericServiceInterface<VacationType>, GenericServiceImplementation<VacationType>>();
 
 

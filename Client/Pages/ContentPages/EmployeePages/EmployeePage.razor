@@ -265,7 +265,7 @@
     private async Task GetVacationTypes() => VacationTypes = await vacationTypeService.GetAll(Constants.VacationTypeBaseUrl);
 
     HealthDialog? healthDialog;
-    MedicalLeave MedicalLeave = new();
+    MedicalLeaveDTO MedicalLeave = new();
     private void AddHealthClicked()
     {
         MedicalLeave.EmployeeId = SelectedEmployee.Id;
@@ -273,7 +273,7 @@
         healthDialog!.OpenDialog();
     }
 
-    public async Task SaveHealthEvent(MedicalLeave item)
+    public async Task SaveHealthEvent(MedicalLeaveDTO item)
     {
         item.EmployeeId = SelectedEmployee.Id;
         var (flag, message) = await healthService.Insert(item, Constants.HealthBaseUrl);
@@ -288,7 +288,7 @@
     }
 
     OvertimeDialog? overtimeDialog;
-    Overtime Overtime = new();
+    OvertimeDTO Overtime = new();
     List<OvertimeType> OvertimeTypes = [];
     private void AddOvertimeClicked()
     {
@@ -297,7 +297,7 @@
         overtimeDialog!.OpenDialog();
     }
 
-    async Task SaveOvertimeEvent(Overtime item)
+    async Task SaveOvertimeEvent(OvertimeDTO item)
     {
         item.EmployeeId = SelectedEmployee.Id;
         var (flag, message) = await overtimeService.Insert(item, Constants.OvertimeBaseUrl);
@@ -312,7 +312,7 @@
     }
 
     VacationDialog? vacationDialog;
-    Vacation Vacation = new();
+    VacationDTO Vacation = new();
     List<VacationType> VacationTypes = [];
 
     private void AddVacationClicked()
@@ -322,7 +322,7 @@
         vacationDialog!.OpenDialog();
     }
 
-    async Task SaveVacationEvent(Vacation item)
+    async Task SaveVacationEvent(VacationDTO item)
     {
         item.EmployeeId = SelectedEmployee.Id;
         var (flag, message) = await vacationService.Insert(item, Constants.VacationBaseUrl);

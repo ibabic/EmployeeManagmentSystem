@@ -2,7 +2,7 @@
 using BaseLibrary.Entities;
 using BaseLibrary.Responses;
 
-namespace ServerLibrary.Repositories.Contracts
+namespace ServerLibrary.Repositories.Interfaces
 {
     public interface IUserAccount
     {

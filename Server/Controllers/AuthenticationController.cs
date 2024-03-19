@@ -1,7 +1,7 @@
 ﻿using BaseLibrary.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ServerLibrary.Repositories.Contracts;
+using ServerLibrary.Repositories.Interfaces;
 
 namespace Server.Controllers
 {
