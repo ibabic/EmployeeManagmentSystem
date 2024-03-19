@@ -2,8 +2,8 @@
 
 namespace BaseLibrary.DTOs
 {
-    public class VacationDTO : Vacation
-    { 
+    public class MedicalLeaveDTO : MedicalLeave
+    {
         public string? EmployeeFullName { get; set; }
     }
 }
