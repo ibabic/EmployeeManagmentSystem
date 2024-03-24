@@ -11,6 +11,7 @@ namespace BaseLibrary.DTOs
 
         [DataType(DataType.Password)]
         [Required]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string? ConfirmPassword { get; set; }
     }
 }
