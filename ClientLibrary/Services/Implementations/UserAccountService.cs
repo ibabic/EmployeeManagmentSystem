@@ -42,6 +42,13 @@ namespace ClientLibrary.Services.Implementations
             return result!;
         }
 
+        public async Task<UserProfile> GetUserProfileAsync(int id)
+        {
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.GetFromJsonAsync<UserProfile>($"{AuthUrl}/userProfile/{id}");
+            return result!;
+        }
+
         public async Task<GeneralResponse> UpdateUser(ManageUser user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();

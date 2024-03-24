@@ -10,6 +10,7 @@ namespace ClientLibrary.Services.Interfaces
         Task<LoginResponse> SignInAsync(Login user);
         Task<LoginResponse> RefreshTokenAsync(RefreshToken token);
         Task<List<ManageUser>> GetUsers();
+        Task<UserProfile> GetUserProfileAsync(int id);
         Task<GeneralResponse> UpdateUser(ManageUser user);
         Task<List<SystemRole>> GetRoles();
         Task<GeneralResponse> DeleteUser(int id);
