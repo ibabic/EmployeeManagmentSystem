@@ -42,6 +42,14 @@ namespace Server.Controllers
             return Ok(users);
         }
 
+        [HttpGet("userProfile/{id}")]
+        public async Task<IActionResult> GetUserProfileAsync(int id)
+        {
+            var user = await accountRepository.GetUserProfileAsync(id);
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
+
         [HttpPut("update-user")]
         public async Task<IActionResult> UpdateUser(ManageUser manageUser)
         {
