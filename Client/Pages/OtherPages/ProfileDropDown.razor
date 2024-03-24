@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <ul class="list-group"> 
                         <li class="list-group-item">
-                            <a class="text-primary fw-bold float-start text-decoration-none" style="font-family:Tahoma; cursor:pointer;">
+                            <a class="text-primary fw-bold float-start text-decoration-none" style="font-family:Tahoma; cursor:pointer;" @onclick="ProfileClicked">
                                 <i class="bi bi-person-gear"></i>
                                 Profile
                             </a>
@@ -36,5 +36,10 @@
         var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
         await customAuthStateProvider.UpdateAuthenticationState(logoutModel);
         navManager.NavigateTo("/identity/account/login", replace:true, forceLoad: true);
+    }
+
+    async Task ProfileClicked()
+    {
+        navManager.NavigateTo("/identity/account/profile", replace: true, forceLoad: true);
     }
 }

@@ -1,0 +1,120 @@
+﻿@page "/identity/account/profile"
+@using System.Security.Claims
+@layout AuthenticationLayout
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="float-start">User Profile</h4>
+                    <button class="btn btn-primary float-end" @onclick="ToggleEditMode">@((EditMode ? "View user profile" : "Edit user profile"))</button>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="User" OnValidSubmit="HandleProfileUpdate">
+                        <DataAnnotationsValidator />
+                        <div class="form-group mt-3">
+                            <label class="form-label">Full Name</label>
+                            <InputText @bind-Value="User.FullName" class="form-control" disabled="@(!EditMode)"></InputText>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Email</label>
+                            <InputText @bind-Value="User.Email" class="form-control" disabled="@(!EditMode)"></InputText>
+                        </div>
+                        @if (!EditMode)
+                        {
+                            <div>
+                                <div class="form-group mt-3">
+                                    <label class="form-label">User role</label>
+                                    <input type="text" @bind="User.Role" class="form-control" disabled />
+                                </div>
+                            </div>
+                        }
+                        @if (EditMode)
+                        {
+                            <div>
+                                <div class="form-group mt-3">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" @bind="User.Password" class="form-control" />
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" @bind="User.ConfirmPassword" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                @if (ShowLoadingButton)
+                                {
+                                    <ButtonLoadingSpinner></ButtonLoadingSpinner>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-outline-primary" type="submit">Update Profile</button>
+                                }
+                            </div>
+                        }
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public bool ShowLoadingButton { get; set; } = false;
+    public bool EditMode { get; set; } = false;
+    UserProfile User = new();
+
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var user = (await AuthenticationState).User;
+        string userId;
+        var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim != null)
+        {
+            userId = userIdClaim.Value;
+            await GetUserProfile(userId);
+        }
+    }
+
+    async Task GetUserProfile(string id)
+    {
+        var userProfile = await accountService.GetUserProfileAsync(int.Parse(id));
+
+        if (userProfile != null)
+        {
+            User.Id = userProfile.Id;
+            User.FullName = userProfile.FullName;
+            User.Email = userProfile.Email;
+            User.Role = userProfile.Role;
+        }
+        else
+        {
+            await DisplayErrorDialog("Failed to get profile");
+        }
+    }
+
+    async Task HandleProfileUpdate()
+    {
+        // showloadingbutton = true;
+        // var result = await accountservice.updateuserprofileasync(user);
+        // showloadingbutton = false;
+    }
+
+    private async Task DisplaySuccessDialog(string message)
+    {
+        await dialogService.AlertAsync(message, "Success");
+    }
+
+    private async Task DisplayErrorDialog(string message)
+    {
+        await dialogService.AlertAsync(message, "Error");
+    }
+
+    private void ToggleEditMode()
+    {
+        EditMode = !EditMode;
+    }
+}
