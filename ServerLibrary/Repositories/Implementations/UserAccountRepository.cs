@@ -253,6 +253,39 @@ namespace ServerLibrary.Repositories.Implementations
             return users;
         }
 
+        public async Task<UserProfile> GetUserProfileAsync(int id)
+        {
+            var methodName = nameof(GetUserProfileAsync);
+            logger.LogInformation($"[{methodName}] Retrieving user profile for ID: {id}");
+
+            var user = await appDbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                logger.LogError($"[{methodName}] User with ID {id} not found");
+                return null!;
+            }
+
+            var userRole = await FindUserRole(id);
+            if (userRole == null)
+            {
+                logger.LogWarning($"[{methodName}] No roles found for user with ID {id}");
+                return null!;
+            }
+
+            var roleName = await FindRoleName(userRole.RoleId);
+
+            var userProfile = new UserProfile
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = roleName!.Name
+            };
+
+            logger.LogInformation($"[{methodName}] User profile retrieved successfully for ID: {id}");
+            return userProfile;
+        }
+
         public async Task<GeneralResponse> UpdateUser(ManageUser user)
         {
             var methodName = nameof(UpdateUser);
