@@ -8,7 +8,10 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="float-start">User Profile</h4>
-                    <button class="btn btn-primary float-end" @onclick="ToggleEditMode">@((EditMode ? "View user profile" : "Edit user profile"))</button>
+                    <div class="float-end">
+                        <button class="btn btn-primary" @onclick="GoToHomepage">Homepage</button>
+                        <button class="btn btn-primary mx-2" @onclick="ToggleEditMode">@((EditMode ? "View user profile" : "Edit user profile"))</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <EditForm Model="User" OnValidSubmit="HandleProfileUpdate">
@@ -98,9 +101,23 @@
 
     async Task HandleProfileUpdate()
     {
-        // showloadingbutton = true;
-        // var result = await accountservice.updateuserprofileasync(user);
-        // showloadingbutton = false;
+        ShowLoadingButton = true;
+        var result = await accountService.UpdateUserProfile(User);
+        ShowLoadingButton = false;
+
+        if (result.Flag)
+        {
+            await DisplaySuccessDialog("Profile updated successfully");
+        }
+        else
+        {
+            await DisplayErrorDialog("Failed to update profile");
+        }
+    }
+
+    private void GoToHomepage()
+    {
+        navManager.NavigateTo("/");
     }
 
     private async Task DisplaySuccessDialog(string message)
