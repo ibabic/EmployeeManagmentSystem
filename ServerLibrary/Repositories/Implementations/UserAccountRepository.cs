@@ -286,6 +286,38 @@ namespace ServerLibrary.Repositories.Implementations
             return userProfile;
         }
 
+        public async Task<GeneralResponse> UpdateUserProfile(UserProfile user)
+        {
+            var methodName = nameof(UpdateUserProfile);
+            logger.LogInformation($"[{methodName}] Attempting to update user profile...");
+
+            if (user == null)
+            {
+                logger.LogError($"[{methodName}] Model is empty");
+                return new GeneralResponse(false, "Model is empty");
+            }
+
+            var userEntity = await appDbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == user.Id);
+            if (userEntity == null)
+            {
+                logger.LogError($"[{methodName}] User not found");
+                return new GeneralResponse(false, "User not found");
+            }
+
+            userEntity.FullName = user.FullName;
+            userEntity.Email = user.Email;
+
+            if (!string.IsNullOrEmpty(user.Password))
+            {
+                userEntity.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            }
+
+            await appDbContext.SaveChangesAsync();
+
+            logger.LogInformation($"[{methodName}] User profile updated successfully");
+            return new GeneralResponse(true, "User profile updated successfully");
+        }
+
         public async Task<GeneralResponse> UpdateUser(ManageUser user)
         {
             var methodName = nameof(UpdateUser);
