@@ -7,11 +7,12 @@
                 <div class="card border-danger shadow-lg">
                     <div class="card-header"> <h4 class="float-start">Manage Employees Vacations</h4></div>
                     <div class="card-header" style="max-height:580px; overflow-x:hidden; overflow-y:scroll">
-                        <div class="card-body">
+                        <div class="card-body">                           
                             @{
                                 var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Print" });
                             }
                             <SfGrid DataSource="@Vacations" AllowPaging="true" AllowSorting="true" Toolbar="@Tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
+                                <GridSearchSettings Fields=@SearchFields Operator=Syncfusion.Blazor.Operator.Contains IgnoreCase="true"></GridSearchSettings>
                                 <GridPageSettings PageSize="5"></GridPageSettings>
                                 <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="VacationDTO"></GridEvents>
                                 <GridColumns>
@@ -63,6 +64,7 @@
     VacationDTO ItemModel = new();
     public List<VacationDTO> Vacations { get; set; } = new();
     public List<VacationType> VacationTypes { get; set; } = new();
+    public string[] SearchFields { get; set; } = new string[] { "EmployeeFullName", "VacationType.Name" };
 
     protected async override Task OnInitializedAsync()
     {
