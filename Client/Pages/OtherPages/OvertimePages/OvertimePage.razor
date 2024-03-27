@@ -12,6 +12,7 @@
                                 var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Print" });
                             }
                             <SfGrid DataSource="@Overtimes" AllowPaging="true" AllowSorting="true" Toolbar="@Tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
+                                <GridSearchSettings Fields="@SearchFields" Operator=Syncfusion.Blazor.Operator.Contains IgnoreCase="true"></GridSearchSettings>
                                 <GridPageSettings PageSize="5"></GridPageSettings>
                                 <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="OvertimeDTO"></GridEvents>
                                 <GridColumns>
@@ -62,6 +63,7 @@
     OvertimeDTO ItemModel = new();
     public List<OvertimeDTO> Overtimes { get; set; } = new();
     public List<OvertimeType> OvertimeTypes { get; set; } = new();
+    public string[] SearchFields { get; set; } = new string[] { "EmployeeFullName", "OvertimeType.Name" };
 
     protected async override Task OnInitializedAsync()
     {
