@@ -77,7 +77,7 @@
     private async Task HandleSaveOperationEvent(MedicalLeaveDTO health)
     {
         var result = await healthService.Update(health, Constants.HealthBaseUrl);
-        bool successCheck = await DisplayMessage(result.Flag, result.Message);
+        bool successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         if (successCheck)
         {
             Health = new();
@@ -97,23 +97,9 @@
         if (!confirm) return;
 
         var response = await healthService.DeleteById(item.EmployeeId, Constants.HealthBaseUrl);
-        var result = await DisplayMessage(response.Flag, response.Message);
+        var result = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         if (result)
             await GetHealth();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void Dispose() => appState.Action -= StateHasChanged;

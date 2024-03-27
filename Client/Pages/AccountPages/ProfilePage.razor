@@ -95,7 +95,7 @@
         }
         else
         {
-            await DisplayErrorDialog("Failed to get profile");
+            await Helpers.DisplayMessage(false, "Failed to get profile", dialogService);
         }
     }
 
@@ -107,11 +107,11 @@
 
         if (result.Flag)
         {
-            await DisplaySuccessDialog("Profile updated successfully");
+            await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
-            await DisplayErrorDialog("Failed to update profile");
+            await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
     }
 
@@ -120,15 +120,6 @@
         navManager.NavigateTo("/");
     }
 
-    private async Task DisplaySuccessDialog(string message)
-    {
-        await dialogService.AlertAsync(message, "Success");
-    }
-
-    private async Task DisplayErrorDialog(string message)
-    {
-        await dialogService.AlertAsync(message, "Error");
-    }
 
     private void ToggleEditMode()
     {

@@ -87,7 +87,7 @@
     private async Task HandleSaveOperationEvent(VacationDTO item)
     {
         var result = await vacationService.Update(item, Constants.VacationBaseUrl);
-        bool successCheck = await DisplayMessage(result.Flag, result.Message);
+        bool successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         if (successCheck)
         {
             ItemModel = new();
@@ -107,23 +107,9 @@
         if (!confirm) return;
 
         var response = await vacationService.DeleteById(item.EmployeeId, Constants.VacationBaseUrl);
-        var result = await DisplayMessage(response.Flag, response.Message);
+        var result = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         if (result)
             await GetVacations();
-    }
-
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
     }
 
     public void Dispose() => appState.Action -= StateHasChanged;

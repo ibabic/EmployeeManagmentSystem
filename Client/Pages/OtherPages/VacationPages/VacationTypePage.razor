@@ -82,12 +82,12 @@
         if (item.Id > 0)
         {
             var result = await vacationTypeService.Update(item, Constants.VacationTypeBaseUrl);
-            successCheck = await DisplayMessage(result.Flag, result.Message);
+            successCheck = await Helpers.DisplayMessage(result.Flag, result.Message, dialogService);
         }
         else
         {
             var response = await vacationTypeService.Insert(item, Constants.VacationTypeBaseUrl);
-            successCheck = await DisplayMessage(response.Flag, response.Message);
+            successCheck = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         }
         if (successCheck)
         {
@@ -111,23 +111,10 @@
         if (!confirm) return;
 
         var response = await vacationTypeService.DeleteById(item.Id, Constants.VacationTypeBaseUrl);
-        var result = await DisplayMessage(response.Flag, response.Message);
+        var result = await Helpers.DisplayMessage(response.Flag, response.Message, dialogService);
         if (result)
             await GetTypes();
     }
 
-    private async Task<bool> DisplayMessage(bool flag, string message)
-    {
-        if (flag)
-        {
-            await dialogService.AlertAsync(message, "Success Operation");
-            return true;
-        }
-        else
-        {
-            await dialogService.AlertAsync(message, "Alert!");
-            return false;
-        }
-    }
     public void Dispose() => appState.Action -= StateHasChanged;
 }
