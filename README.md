@@ -16,6 +16,8 @@ The application is designed with three distinct roles:
 
 #### Enhanced Calendar Functionality
 
+- Notifications: Employees will receive notifications regarding scheduled vacations and overtime assignments.
+- Vacation and Overtime Proposals: Employees can propose vacation time and overtime directly through the app.
 - Employee Schedule View: Employees will have access to a calendar displaying all scheduled activities, including vacations, sick leave, overtime, and meetings for any selected date. This feature provides employees with a comprehensive overview of their daily schedule, allowing them to effectively manage their time and commitments.
 
 Scheduled Activities:
@@ -23,8 +25,6 @@ Scheduled Activities:
 - Sick Leave: Indicates days when employees are on sick leave.
 - Overtime: Shows overtime hours scheduled for specific dates.
 - Meetings: Lists proposed and approved meeting schedules.
-- Notifications: Employees will receive notifications regarding scheduled vacations and overtime assignments.
-- Vacation and Overtime Proposals: Employees can propose vacation time and overtime directly through the app.
 
 #### Team Management Features
 
