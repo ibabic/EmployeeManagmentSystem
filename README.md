@@ -1,6 +1,4 @@
-# Project Title
-
-Employee Management System App
+# Employee Management System App
 
 # Description
 
