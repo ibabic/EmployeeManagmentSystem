@@ -36,6 +36,6 @@ Scheduled Activities:
 - Meeting Proposal: Employees can propose meetings for specific dates and times through the calendar feature.
 - Approval Process: Meeting proposals require approval from authorized users within the application.
 
-### Contribution
+# Contribution
 
 Contributions to this project are welcome! If you have any suggestions, find bugs, or want to contribute to the development, feel free to submit a pull request or open an issue on GitHub.
