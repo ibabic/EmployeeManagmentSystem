@@ -1,6 +1,6 @@
 # Employee Management System App
 
-# Description
+## Description
 
 This project aims to develop an Employee Management System application. The app facilitates various administrative tasks such as adding new employees, managing departments, branches, countries, and cities. Additionally, it allows users to handle employee-related functionalities like tracking vacation days, sick leave, and overtime.
 
@@ -36,6 +36,26 @@ Scheduled Activities:
 - Meeting Proposal: Employees can propose meetings for specific dates and times through the calendar feature.
 - Approval Process: Meeting proposals require approval from authorized users within the application.
 
-# Contribution
+## Technologies Used
+
+The application utilizes the following technologies:
+
+- Entity Framework (Code-First Approach) 
+- ASP.NET Web API
+- JWT
+- Blazor Web App (Syncfusion) 
+- .NET Core 8.0
+- C#
+
+## Setting Up the Application
+
+- Configure database connection: Set up the database connection string in the appsettings.json file located in the Server project.
+- Run Entity Framework migrations: Execute the necessary migrations to create or update the database schema using Entity Framework Code-First approach.
+- Configure JWT token: Adjust JWT token configuration in the appsettings.json file within the Server project.
+- Configure Syncfusion: Adjust Syncfusion configuration in the appsettings.json file located in the Client project.
+- Start the server: Run the server-side project in the appropriate development environment (e.g., Visual Studio).
+- Start the client: Launch the client-side project to initiate the frontend component of the application.
+
+## Contribution
 
 Contributions to this project are welcome! If you have any suggestions, find bugs, or want to contribute to the development, feel free to submit a pull request or open an issue on GitHub.
